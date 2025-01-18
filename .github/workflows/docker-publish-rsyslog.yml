@@ -11,17 +11,17 @@ on:
     # Publish semver tags as releases.
     tags: [ 'v*.*.*' ]
     paths:
-      - 'rsync/**'
+      - 'rsyslog/**'
   pull_request:
     branches: [ "main" ]
     paths:
-      - 'rsync/**'
+      - 'rsyslog/**'
 
 env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
-  IMAGE_NAME: lacrosse1991/rsync
+  IMAGE_NAME: lacrosse1991/rsyslog
 
 
 jobs:
@@ -54,7 +54,7 @@ jobs:
         id: push
         uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
         with:
-          context: rsync/
+          context: rsyslog/
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest, ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.run_number }}
           labels: ${{ steps.meta.outputs.labels }}
