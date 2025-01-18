@@ -10,8 +10,12 @@ on:
     branches: [ "main" ]
     # Publish semver tags as releases.
     tags: [ 'v*.*.*' ]
+    paths:
+      - 'keycloak/**'
   pull_request:
     branches: [ "main" ]
+    paths:
+      - 'keycloak/**'
 
 env:
   # Use docker.io for Docker Hub if empty
@@ -22,7 +26,6 @@ env:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     permissions:
       contents: read
