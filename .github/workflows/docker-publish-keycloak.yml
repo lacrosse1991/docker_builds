@@ -26,7 +26,7 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: arc-runners-docker-builds
     permissions:
       contents: read
       packages: write
