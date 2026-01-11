@@ -1,6 +1,6 @@
 FROM quay.io/keycloak/keycloak:26.5.0-0@sha256:5fdd7cda82e58775ed124294c7e16fabc33166d38dfc4aabebda7d64e7a964bf AS builder
 
-# Enable health and metrics support.
+# Enable health and metrics support..
 ENV KC_HEALTH_ENABLED=true
 ENV KC_METRICS_ENABLED=true
 # Configure a database vendor
