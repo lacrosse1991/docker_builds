@@ -1,9 +1,9 @@
 FROM debian:stable-20251229-slim@sha256:449673e1239be6fdc89616f926abb87f360c280c3bb7ca3591694564359695fa
 
-# renovate: suite=stable depName=rsyslog
+# renovate: suite=trixie depName=rsyslog
 ENV RSYSLOG_VERSION="8.2504.0-1"
 
-# renovate: suite=stable depName=rsyslog-gnutls
+# renovate: suite=trixie depName=rsyslog-gnutls
 ENV RSYSLOG_GNUTLS_VERSION="8.2504.0-1"
 
 
