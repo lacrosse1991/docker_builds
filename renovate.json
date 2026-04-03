@@ -6,11 +6,9 @@
       "customType": "regex",
       "managerFilePatterns": ["**/Dockerfile"],
       "matchStrings": [
-        "#\\s*renovate:\\s*?(suite=(?<suite>.*?))?\\s*depName=(?<depName>.*?)?\\sENV .*?_VERSION=\"(?<currentValue>.*)\""
+        "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?) registryUrl=(?<registryUrl>.*?)\\nENV .*?_VERSION=\"(?<currentValue>.*)\""
       ],
-      "registryUrlTemplate": "https://deb.debian.org/debian {{suite}} main",
-      "versioningTemplate": "deb",
-      "datasourceTemplate": "deb"
+      "versioningTemplate": "deb"
     }
   ]
 }
