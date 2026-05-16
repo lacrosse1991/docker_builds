@@ -1,4 +1,4 @@
-FROM debian:trixie-slim@sha256:26f98ccd92fd0a44d6928ce8ff8f4921b4d2f535bfa07555ee5d18f61429cf0c
+FROM debian:trixie-slim@sha256:109e2c65005bf160609e4ba6acf7783752f8502ad218e298253428690b9eaa4b
 
 # renovate: datasource=deb depName=rsyslog registryUrl=https://deb.debian.org/debian?suite=trixie&components=main&binaryArch=amd64
 ENV RSYSLOG_VERSION="8.2504.0-1"
