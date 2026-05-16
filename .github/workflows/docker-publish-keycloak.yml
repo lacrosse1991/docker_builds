@@ -53,7 +53,7 @@ jobs:
 
       - name: Build and push Docker image
         id: push
-        uses: docker/build-push-action@83bfd93ab480705a7b99a2ed02765137f5ab55ba
+        uses: docker/build-push-action@789f68658055d3ca993799b232b5c46dfe3f114d
         with:
           context: keycloak/
           push: true
