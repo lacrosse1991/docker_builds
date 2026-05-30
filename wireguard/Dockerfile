@@ -13,7 +13,7 @@ ENV NFTABLES_VERSION="1.1.3-1"
 ENV TINI_VERSION="0.19.0-3+b7"
 
 # renovate: datasource=deb depName=sudo registryUrl=https://deb.debian.org/debian?suite=trixie&components=main&binaryArch=amd64
-ENV SUDO_VERSION="1.9.17p2-5"
+ENV SUDO_VERSION="1.9.16p2-3+deb13u2"
 
 RUN apt-get update -y && apt-get install -y \
   wireguard-tools="${WIREGUARD_TOOLS_VERSION}" \
