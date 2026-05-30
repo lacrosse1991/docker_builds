@@ -21,7 +21,7 @@ RUN apt-get update -y && apt-get install -y \
   && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /etc/wireguard /run/wireguard /wireguard-bin \
-  && chown -R 1001:1001 /run/wireguard /wireguard-bin
+  && chown -R 1001:1001 /etc/wireguard /run/wireguard /wireguard-bin
 
 COPY entrypoint.sh /entrypoint.sh
 
