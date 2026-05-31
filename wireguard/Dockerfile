@@ -24,6 +24,11 @@ RUN apt-get update -y && apt-get install -y \
   ca-certificates \
   && rm -rf /var/lib/apt/lists/*
 
+RUN groupadd --gid 1001 wireguard \
+  && useradd --uid 1001 --gid 1001 --create-home --shell /usr/sbin/nologin wireguard \
+  && echo 'wireguard ALL=(root) NOPASSWD: /usr/bin/wg-quick' > /etc/sudoers.d/wireguard \
+  && chmod 0440 /etc/sudoers.d/wireguard
+
 RUN mkdir -p /etc/wireguard /run/wireguard /wireguard-bin \
   && chown -R 1001:1001 /etc/wireguard /run/wireguard /wireguard-bin
 
@@ -31,7 +36,7 @@ COPY entrypoint.sh /entrypoint.sh
 
 RUN chmod 0755 /entrypoint.sh
 
-USER 1001
+USER wireguard
 
 EXPOSE 51820/udp
 
