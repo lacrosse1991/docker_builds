@@ -7,9 +7,14 @@ WG_CONFIG_PATH="${WG_CONFIG_PATH:-/etc/wireguard/${WG_INTERFACE}.conf}"
 WG_PRIVATE_KEY_PATH="${WG_PRIVATE_KEY_PATH:-/etc/wireguard-secrets/privatekey}"
 FINAL_CONFIG_PATH="/run/wireguard/${WG_INTERFACE}.conf"
 
+WG_QUICK="wg-quick"
+if [ "$(id -u)" -ne 0 ]; then
+  WG_QUICK="sudo -n wg-quick"
+fi
+
 cleanup() {
   if [ -f "${FINAL_CONFIG_PATH}" ]; then
-    wg-quick down "${FINAL_CONFIG_PATH}" >/dev/null 2>&1 || true
+    ${WG_QUICK} down "${FINAL_CONFIG_PATH}" >/dev/null 2>&1 || true
   fi
 }
 
@@ -54,7 +59,7 @@ fi
 
 chmod 0600 "${FINAL_CONFIG_PATH}"
 
-wg-quick up "${FINAL_CONFIG_PATH}"
+${WG_QUICK} up "${FINAL_CONFIG_PATH}"
 
 while true; do
   sleep 3600
