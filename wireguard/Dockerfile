@@ -22,6 +22,7 @@ RUN apt-get update -y && apt-get install -y \
   tini="${TINI_VERSION}" \
   sudo="${SUDO_VERSION}" \
   ca-certificates \
+  tcpdump \
   && rm -rf /var/lib/apt/lists/*
 
 RUN groupadd --gid 1001 wireguard \
