@@ -7,14 +7,9 @@ WG_CONFIG_PATH="${WG_CONFIG_PATH:-/etc/wireguard/${WG_INTERFACE}.conf}"
 WG_PRIVATE_KEY_PATH="${WG_PRIVATE_KEY_PATH:-/etc/wireguard-secrets/privatekey}"
 FINAL_CONFIG_PATH="/run/wireguard/${WG_INTERFACE}.conf"
 
-WG_QUICK="wg-quick"
-if [ "$(id -u)" -ne 0 ]; then
-  WG_QUICK="sudo -n wg-quick"
-fi
-
 cleanup() {
   if [ -f "${FINAL_CONFIG_PATH}" ]; then
-    ${WG_QUICK} down "${FINAL_CONFIG_PATH}" >/dev/null 2>&1 || true
+    wg-quick down "${FINAL_CONFIG_PATH}" >/dev/null 2>&1 || true
   fi
 }
 
@@ -35,10 +30,17 @@ else
     exit 1
   fi
 
-  WG_PRIVATE_KEY="$(tr -d '\r\n' < "${WG_PRIVATE_KEY_PATH}")"
-
-  awk -v key="${WG_PRIVATE_KEY}" '
-  BEGIN { inserted = 0 }
+  # Read the key file from within awk to avoid exposing the key
+  # in shell variables or process listings (visible in /proc/PID/cmdline).
+  awk -v keyfile="${WG_PRIVATE_KEY_PATH}" '
+  BEGIN {
+    while ((getline line < keyfile) > 0) {
+      gsub(/\r/, "", line)
+      key = key line
+    }
+    close(keyfile)
+    inserted = 0
+  }
   /^\[Interface\]/ {
     print
     if (!inserted) {
@@ -59,7 +61,7 @@ fi
 
 chmod 0600 "${FINAL_CONFIG_PATH}"
 
-${WG_QUICK} up "${FINAL_CONFIG_PATH}"
+wg-quick up "${FINAL_CONFIG_PATH}"
 
 # Enable NAT for WireGuard clients to reach internet
 echo "Setting up NAT for ${WG_INTERFACE}..."
