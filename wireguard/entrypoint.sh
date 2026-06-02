@@ -63,9 +63,14 @@ ${WG_QUICK} up "${FINAL_CONFIG_PATH}"
 
 # Enable NAT for WireGuard clients to reach internet
 echo "Setting up NAT for ${WG_INTERFACE}..."
-iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE 2>/dev/null || nft add rule nat postrouting oifname eth0 counter masquerade
-iptables -A FORWARD -i ${WG_INTERFACE} -o eth0 -j ACCEPT 2>/dev/null || nft add rule inet filter forward iifname ${WG_INTERFACE} oifname eth0 counter accept
-iptables -A FORWARD -i eth0 -o ${WG_INTERFACE} -j ACCEPT 2>/dev/null || nft add rule inet filter forward iifname eth0 oifname ${WG_INTERFACE} counter accept
+nft add table nat
+nft add chain nat postrouting '{type nat hook postrouting priority srcnat; }'
+nft add rule nat postrouting oifname eth0 counter masquerade
+nft add table inet filter
+nft add chain inet filter forward '{type filter hook forward priority filter; }'
+nft add rule inet filter forward iifname ${WG_INTERFACE} oifname eth0 counter accept
+nft add rule inet filter forward iifname eth0 oifname ${WG_INTERFACE} counter accept
+echo "NAT setup complete"
 
 while true; do
   sleep 3600
