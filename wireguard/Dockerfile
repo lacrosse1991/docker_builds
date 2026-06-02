@@ -30,7 +30,8 @@ RUN groupadd --gid 1001 wireguard \
   && chmod 0440 /etc/sudoers.d/wireguard
 
 RUN mkdir -p /etc/wireguard /run/wireguard /wireguard-bin \
-  && chown -R 1001:1001 /etc/wireguard /run/wireguard /wireguard-bin
+  && chown -R 1001:1001 /etc/wireguard /run/wireguard /wireguard-bin \
+  && chmod 0755 /etc/wireguard
 
 COPY entrypoint.sh /entrypoint.sh
 
