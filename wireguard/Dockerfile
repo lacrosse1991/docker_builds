@@ -1,4 +1,4 @@
-FROM debian:trixie-slim@sha256:109e2c65005bf160609e4ba6acf7783752f8502ad218e298253428690b9eaa4b
+FROM debian:trixie-slim@sha256:4e401d95de7083948053197a9c3913343cd06b706bf15eb6a0c3ccd26f436a0e
 
 # renovate: datasource=deb depName=wireguard-tools registryUrl=https://deb.debian.org/debian?suite=trixie&components=main&binaryArch=amd64
 ENV WIREGUARD_TOOLS_VERSION="1.0.20210914-3"
