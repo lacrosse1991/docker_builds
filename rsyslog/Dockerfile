@@ -4,7 +4,7 @@ FROM debian:trixie-slim@sha256:3a39a0592364683e6bab97937b72cad5a8fa6dcbbee90edb3
 ENV RSYSLOG_VERSION="8.2504.0-1"
 
 # renovate: datasource=deb depName=rsyslog-gnutls registryUrl=https://deb.debian.org/debian?suite=trixie&components=main&binaryArch=amd64
-ENV RSYSLOG_GNUTLS_VERSION="8.2504.0-1"
+ENV RSYSLOG_GNUTLS_VERSION="8.2504.0-1+deb13u2"
 
 
 RUN apt-get -y update && apt-get install rsyslog="${RSYSLOG_VERSION}" rsyslog-gnutls="${RSYSLOG_GNUTLS_VERSION}" -y
