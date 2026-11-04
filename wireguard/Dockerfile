@@ -10,7 +10,7 @@ ENV IPROUTE2_VERSION="6.15.0-1"
 ENV NFTABLES_VERSION="1.1.3-1"
 
 # renovate: datasource=deb depName=tini registryUrl=https://deb.debian.org/debian?suite=trixie&components=main&binaryArch=amd64
-ENV TINI_VERSION="0.19.0-3+b7"
+ENV TINI_VERSION="0.19.0-3+b8"
 
 RUN apt-get update -y && apt-get install -y \
   wireguard-tools="${WIREGUARD_TOOLS_VERSION}" \
