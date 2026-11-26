@@ -33,5 +33,3 @@ EXPOSE 51820/udp
 WORKDIR /wireguard-bin
 
 ENTRYPOINT ["/usr/bin/tini", "--", "/entrypoint.sh"]
-
-# CI check: PR build should run without pushing
