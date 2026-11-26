@@ -1,4 +1,4 @@
-FROM debian:trixie-slim@sha256:109e2c65005bf160609e4ba6acf7783752f8502ad218e298253428690b9eaa4b
+FROM debian:trixie-slim@sha256:3a39a0592364683e6bab97937b72cad5a8fa6dcbbee90edb3bb48c7f8e94f258
 
 # renovate: datasource=deb depName=wireguard-tools registryUrl=https://deb.debian.org/debian?suite=trixie&components=main&binaryArch=amd64
 ENV WIREGUARD_TOOLS_VERSION="1.0.20210914-3"
@@ -10,35 +10,23 @@ ENV IPROUTE2_VERSION="6.15.0-1"
 ENV NFTABLES_VERSION="1.1.3-1"
 
 # renovate: datasource=deb depName=tini registryUrl=https://deb.debian.org/debian?suite=trixie&components=main&binaryArch=amd64
-ENV TINI_VERSION="0.19.0-3+b7"
-
-# renovate: datasource=deb depName=sudo registryUrl=https://deb.debian.org/debian?suite=trixie&components=main&binaryArch=amd64
-ENV SUDO_VERSION="1.9.16p2-3+deb13u2"
+ENV TINI_VERSION="0.19.0-3+b8"
 
 RUN apt-get update -y && apt-get install -y \
   wireguard-tools="${WIREGUARD_TOOLS_VERSION}" \
   iproute2="${IPROUTE2_VERSION}" \
   nftables="${NFTABLES_VERSION}" \
   tini="${TINI_VERSION}" \
-  sudo="${SUDO_VERSION}" \
   ca-certificates \
-  tcpdump \
   && rm -rf /var/lib/apt/lists/*
 
-RUN groupadd --gid 1001 wireguard \
-  && useradd --uid 1001 --gid 1001 --create-home --shell /usr/sbin/nologin wireguard \
-  && echo 'wireguard ALL=(root) NOPASSWD: /usr/bin/wg-quick' > /etc/sudoers.d/wireguard \
-  && chmod 0440 /etc/sudoers.d/wireguard
-
 RUN mkdir -p /etc/wireguard /run/wireguard /wireguard-bin \
-  && chown -R 1001:1001 /etc/wireguard /run/wireguard /wireguard-bin \
-  && chmod 0755 /etc/wireguard
+  && chmod 0700 /etc/wireguard \
+  && chmod 0755 /run/wireguard /wireguard-bin
 
 COPY entrypoint.sh /entrypoint.sh
 
 RUN chmod 0755 /entrypoint.sh
-
-USER wireguard
 
 EXPOSE 51820/udp
 
