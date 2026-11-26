@@ -1,6 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:best-practices", "helpers:pinGitHubActionDigests"],
+  "rebaseWhen": "behind-base-branch",
   "customManagers": [
     {
       "customType": "regex",
@@ -9,6 +10,37 @@
         "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?) registryUrl=(?<registryUrl>.*?)\\nENV .*?_VERSION=\"(?<currentValue>.*)\""
       ],
       "versioningTemplate": "deb"
+    }
+  ],
+  "packageRules": [
+    {
+      "description": "Group base digest and apt pins per image: wireguard",
+      "matchFileNames": ["wireguard/Dockerfile"],
+      "matchManagers": ["dockerfile", "custom.regex"],
+      "groupName": "wireguard base and apt pins"
+    },
+    {
+      "description": "Group base digest and apt pins per image: rsyslog",
+      "matchFileNames": ["rsyslog/Dockerfile"],
+      "matchManagers": ["dockerfile", "custom.regex"],
+      "groupName": "rsyslog base and apt pins"
+    },
+    {
+      "description": "Group base image digest and tag per image: keycloak",
+      "matchFileNames": ["keycloak/Dockerfile"],
+      "matchManagers": ["dockerfile"],
+      "groupName": "keycloak base image"
+    },
+    {
+      "description": "Auto-merge digest, patch and minor updates for Dockerfile images",
+      "matchManagers": ["dockerfile", "custom.regex"],
+      "matchUpdateTypes": ["digest", "patch", "minor"],
+      "automerge": true
+    },
+    {
+      "description": "Keep major updates manual",
+      "matchUpdateTypes": ["major"],
+      "automerge": false
     }
   ]
 }
